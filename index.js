@@ -1,8 +1,19 @@
 const express      = require('express')
 const cookieParser = require('cookie-parser')
 const hbs = require('express-handlebars')
+
+var jwt = require('jsonwebtoken')
+
+var helpers = require("./helpers.js")
  
 const app = express()
+
+/***********************************************
+ *  Setup Secret Key **** INSECURE DEV ENV
+ *  ****NOTE THAT THIS SHOULD BE REMOVED AND SET
+ *      IN A MORE SECURE FASHION
+ ***********************************************/
+process.env.SECRET = "sEcReTkEy"
 
 /****************************************************
 //Setup Handlebars and pass in preference parameters:   
@@ -33,11 +44,12 @@ app.get('/login', (req, res)=>{
 })
 
 /****************************************************
- *  PAGE TO GET POST DATA FORM FORM
+ *  PAGE TO GET POST DATA FROM FORM
+ *      AND SET COOKIE
  ***************************************************/
 app.post('/view', (req, res)=>{
+
     let keys = Object.keys(req.cookies)
-    
     console.log(keys)
     res.send(req.cookies)
 })
