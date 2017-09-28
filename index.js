@@ -5,11 +5,19 @@ const app = express()
 
 app.use(cookieParser())
  
-
+/****************************************************
+ *  MAIN LANDING PAGE
+ ***************************************************/
 app.get('/', (req, res) => {
-  console.log('Cookies: ', req.cookies)
+    res.send(req.cookies)
 })
- 
+
+/****************************************************
+ *  LOGIN PAGE
+ ***************************************************/
+app.get('/login', (req, res)=>{
+    
+})
 app.listen(8751)
  
 // curl command that sends an HTTP request with two cookies 
