@@ -11,7 +11,7 @@ const app = express()
 /***********************************************
  *  Setup Secret Key **** INSECURE DEV ENV
  *  ****NOTE THAT THIS SHOULD BE REMOVED AND SET
- *      IN A MORE SECURE FASHION
+ *      IN A MORE SECURE FASHION********
  ***********************************************/
 process.env.SECRET = "sEcReTkEy"
 
@@ -47,11 +47,16 @@ app.get('/login', (req, res)=>{
  *  PAGE TO GET POST DATA FROM FORM
  *      AND SET COOKIE
  ***************************************************/
-app.post('/view', (req, res)=>{
+app.post('/auth', (req, res)=>{
 
+    var token = jwt.sign({ _id: 'sampleuserid' }, process.env.SECRET, { expiresIn: "60 days" });
+    res.cookie('nToken', token, { maxAge: 900000, httpOnly: true });
+
+
+    
     let keys = Object.keys(req.cookies)
-    console.log(keys)
-    res.send(req.cookies)
+    //console.log(keys)
+    res.redirect('/')
 })
 
 app.listen(8751)
