@@ -1,7 +1,16 @@
 const express      = require('express')
 const cookieParser = require('cookie-parser')
+const hbs = require('express-handlebars')
  
 const app = express()
+
+//Setup Handlebars and pass in preference parameters:   
+//      Default layout name:        main
+//      handlebars doc extension    hbs
+app.engine('hbs', hbs({defaultLayout: 'main', extname: 'hbs'}))
+
+//Set handlebars to be express view engine
+app.set('view engine', 'hbs')
 
 app.use(cookieParser())
  
@@ -16,7 +25,7 @@ app.get('/', (req, res) => {
  *  LOGIN PAGE
  ***************************************************/
 app.get('/login', (req, res)=>{
-    
+
 })
 app.listen(8751)
  
