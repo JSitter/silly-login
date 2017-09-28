@@ -4,14 +4,17 @@ const hbs = require('express-handlebars')
  
 const app = express()
 
+/****************************************************
 //Setup Handlebars and pass in preference parameters:   
 //      Default layout name:        main
 //      handlebars doc extension    hbs
+ ***************************************************/
 app.engine('hbs', hbs({defaultLayout: 'main', extname: 'hbs'}))
 
 //Set handlebars to be express view engine
 app.set('view engine', 'hbs')
 
+//Use CookieParser in express app
 app.use(cookieParser())
  
 /****************************************************
@@ -22,12 +25,21 @@ app.get('/', (req, res) => {
 })
 
 /****************************************************
- *  LOGIN PAGE
+ *  LOGIN FORM PAGE
  ***************************************************/
 app.get('/login', (req, res)=>{
-
+    //render login form
+    res.render("login")
 })
+
+/****************************************************
+ *  PAGE TO GET POST DATA FORM FORM
+ ***************************************************/
+app.post('/view', (req, res)=>{
+    let keys = Object.keys(req.cookies)
+    
+    console.log(keys)
+    res.send(req.cookies)
+})
+
 app.listen(8751)
- 
-// curl command that sends an HTTP request with two cookies 
-// curl http://127.0.0.1:8751 --cookie "Name=Nor;Species=Mantis" 
