@@ -1,3 +1,8 @@
+/***********************************************
+ *      SILLY-LOGIN
+ *      V 1.0.0
+ * 
+ ***********************************************/
 const express      = require('express')
 const cookieParser = require('cookie-parser')
 const hbs = require('express-handlebars')
@@ -10,7 +15,8 @@ const app = express()
 
 /***********************************************
  *  Setup Secret Key **** INSECURE DEV ENV
- *  ****NOTE THAT THIS SHOULD BE REMOVED AND SET
+ *  ****NOTE THAT THIS SHOULD BE 
+ *          REMOVED AND SET
  *      IN A MORE SECURE FASHION********
  ***********************************************/
 process.env.SECRET = "sEcReTkEy"

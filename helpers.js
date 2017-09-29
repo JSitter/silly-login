@@ -18,8 +18,8 @@ opts = {
 var expiresDefault = Math.floor(new Date().getTime()/1000) + 7*24*60*60;
 
 var token = jwt.sign({
-        auth:  GUID,
         agent: req.headers['user-agent'],
+        auth:  GUID,
         exp:   opts.expires || expiresDefault
     }, secret);
     return token;
@@ -32,4 +32,6 @@ function generateAndStoreToken(req, opts) {
         "valid" : true,
         "created" : new Date().getTime()
     };
+
+    return token;
 };
