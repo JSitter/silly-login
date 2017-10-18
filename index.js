@@ -6,13 +6,13 @@
 const express      = require('express')
 const cookieParser = require('cookie-parser')
 const hbs = require('express-handlebars')
+const app = express()
 
 var jwt = require('jsonwebtoken')
 
+//Load Helper functions
 var helpers = require("./helpers.js")
  
-const app = express()
-
 /***********************************************
  *  Setup Secret Key **** INSECURE DEV ENV
  *  ****NOTE THAT THIS SHOULD BE 
@@ -50,19 +50,36 @@ app.get('/login', (req, res)=>{
 })
 
 /****************************************************
- *  PAGE TO GET POST DATA FROM FORM
- *      AND SET COOKIE
+ *  GET LOGIN INFORMATION
+*      AND SET COOKIE
  ***************************************************/
 app.post('/auth', (req, res)=>{
 
     var token = jwt.sign({ _id: 'sampleuserid' }, process.env.SECRET, { expiresIn: "60 days" });
     res.cookie('nToken', token, { maxAge: 900000, httpOnly: true });
-
-
     
     let keys = Object.keys(req.cookies)
     //console.log(keys)
     res.redirect('/')
 })
+
+/****************************************************
+ * Verify User
+ ***************************************************/
+var checkAuth = function (req, res, next) {
+    console.log("Checking authentication");
+  
+    if (typeof req.cookies.nToken === 'undefined' || req.cookies.nToken === null) {
+      req.user = null;
+    } else {
+      var token = req.cookies.nToken;
+      var decodedToken = jsonwebtoken.decode(token, { complete: true }) || {};
+      req.user = decodedToken.payload;
+    }
+  
+    next()
+  }
+  
+  app.use(checkAuth)
 
 app.listen(8751)
